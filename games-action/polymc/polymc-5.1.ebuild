@@ -4,10 +4,10 @@ CMAKE_BUILD_TYPE=Release
 
 DESCRIPTION="Alternative Minecraft Launcher"
 HOMEPAGE="polymc.org"
-SRC_URI="https://gerzac1002.de/gz-custom/games-action/${PN}/files/${P}.tar.gz"
+SRC_URI="https://gerzac1002.de/gz-custom/games-openworld/${PN}/files/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="+lto"
+IUSE="lto qt6"
 KEYWORDS="amd64 x86"
 
 S="${WORKDIR}"
@@ -22,23 +22,27 @@ CMAKE_MAKEFILE_GENERATOR="ninja"
 #EGIT_COMMIT="5.1"
 #EGIT_BRANCH="${PV}"
 
-MIN_QT="5.12.0"
+MIN_QT5="5.12.0"
+MIN_QT6="6.0.0"
 QT_SLOT=5
 
 QT_DEPS="
-	>=dev-qt/qtgui-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtbase-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtcore-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qttools-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtnetwork-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtchooser-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtcharts-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtconcurrent-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qttest-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtwidgets-${MIN_QT}:${QT_SLOT}
-	>=dev-qt/qtxml-${MIN_QT}:${QT_SLOT}
+	dev-qt/qtchooser
+	!qt6? (
+		>=dev-qt/qtgui-${MIN_QT5}:5
+		>=dev-qt/qtcore-${MIN_QT5}:5
+		>=dev-qt/qtnetwork-${MIN_QT5}:5
+		>=dev-qt/qtcharts-${MIN_QT5}:5
+		>=dev-qt/qtconcurrent-${MIN_QT5}:5
+		>=dev-qt/qttest-${MIN_QT5}:5
+		>=dev-qt/qtwidgets-${MIN_QT5}:5
+		>=dev-qt/qtxml-${MIN_QT5}:5
+	)
+	qt6? (
+		>=dev-qt/qtbase-${MIN_QT6}:6[concurrent,gui,network,widgets,xml(+)]
+		>=dev-qt/qt5compat-${MIN_QT6}:6
+	)
 "
-
 BDEPEND="
 	kde-frameworks/extra-cmake-modules:5
 "
@@ -67,7 +71,7 @@ src_configure() {
 		-DCMAKE_INSTALL_PREFIX="/usr"
 		-DENABLE_LTO=$(usex lto)
 		-DLauncher_APP_BINARY_NAME="${PN}"
-		-DLauncher_QT_VERSION_MAJOR=${QT_SLOT}
+		-DLauncher_QT_VERSION_MAJOR=$(usex qt6 6 5)
 	)
 	cmake_src_configure
 }
