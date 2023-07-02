@@ -4,13 +4,11 @@ CMAKE_BUILD_TYPE=Release
 
 DESCRIPTION="Alternative Minecraft Launcher"
 HOMEPAGE="polymc.org"
-SRC_URI="https://gerzac1002.de/gz-custom/games-openworld/${PN}/files/${P}.tar.gz"
+SRC_URI="https://gerzac1002.de/gz-custom/games-action/${PN}/files/${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="lto qt6"
 KEYWORDS="amd64 x86"
-
-S="${WORKDIR}"
 
 inherit cmake
 CMAKE_MAKEFILE_GENERATOR="ninja"
