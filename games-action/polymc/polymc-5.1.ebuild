@@ -48,7 +48,7 @@ BDEPEND="
 DEPEND="
 	${QT_DEPS}
 	sys-libs/zlib
-	dev-util/cmake
+	dev-build/cmake
 	|| ( dev-java/openjdk dev-java/openjdk-bin )
 	media-libs/libglvnd
 "
