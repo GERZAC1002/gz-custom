@@ -42,7 +42,7 @@ QT_DEPS="
 	)
 "
 BDEPEND="
-	kde-frameworks/extra-cmake-modules:5
+	kde-frameworks/extra-cmake-modules
 "
 
 DEPEND="
